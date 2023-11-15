@@ -84,17 +84,17 @@ void deleteNode(struct ListNode** head, int value) {
 void displayList(struct ListNode* head) {
     struct ListNode* current = head;
 
-    if (current == NULL) {
-        printf("NULL\n");
+    if (head == NULL) {
+        printf("list vide \n");
         return;
     }
 
     do {
         printf("%d -> ", current->data);
         current = current->next;
-    } while (current != head);
-
-    printf("NULL\n");
+    } while (current != head && current != NULL);
+       current == NULL ? printf("NULL\n") : printf("........\n");
+    
 }
 
 
@@ -165,6 +165,40 @@ int countNodes(struct ListNode *head){
     return count;
     
     
+}
+
+
+struct ListNode* reverseList(struct ListNode* head) {
+
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+
+    struct ListNode *pre = NULL;
+    struct ListNode *curr = head;
+    struct ListNode *nxt = NULL;
+
+    while (curr != NULL) {
+        nxt = curr->next;
+        curr->next = pre;
+        pre = curr;
+        curr = nxt;
+    }
+
+    // 'pre' now points to the new head of the reversed list
+    return pre;
+
+
+}
+
+struct ListNode* reverseListrecursive(struct ListNode* head){
+    if(head == NULL || head->next == NULL){
+        return head;
+    }
+    struct ListNode *rest = reverseListrecursive(head->next);
+    head->next->next = head;
+    head->next = NULL;
+    return rest;
 }
 
 #endif
