@@ -13,7 +13,7 @@ int main() {
     addElement(&myList, 32);
     addElement(&myList, 53);
     addElement(&myList, 79);
-
+    printf("test");
     
     printf("link before circualr :");
     displayList(myList);
