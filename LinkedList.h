@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct ListNode {
     int data;
@@ -22,14 +23,11 @@ struct ListNode* createNode(int data) {
 }
 
 void addElement(struct ListNode** head, int data) {
-    // Create a new node with the given data
     struct ListNode* newNode = createNode(data);
 
-    // If the linked list is empty, set the new node as the head
     if (*head == NULL) {
         *head = newNode;
     } else {
-        // Traverse to the end of the linked list and add the new node
         struct ListNode* current = *head;
         while (current->next != NULL && current->next != *head) {
             current = current->next;
@@ -40,19 +38,15 @@ void addElement(struct ListNode** head, int data) {
 
 void deleteNode(struct ListNode** head, int value) {
     if (*head == NULL) {
-        // Empty list, nothing to delete
         return;
     }
 
     struct ListNode* current = *head;
     struct ListNode* prev = NULL;
 
-    // Traverse the list to find the node with the given value
     do {
         if (current->data == value) {
-            // Node found, update pointers to remove the node
             if (prev != NULL) {
-                // If the node to be deleted is not the first node
                 prev->next = current->next;
                 free(current);
             } else {
@@ -93,7 +87,7 @@ void displayList(struct ListNode* head) {
         printf("%d -> ", current->data);
         current = current->next;
     } while (current != head && current != NULL);
-       current == NULL ? printf("NULL\n") : printf("........\n");
+       current == NULL ? printf("NULL\n") : printf("...circular.....\n");
     
 }
 
@@ -110,7 +104,7 @@ void freeList(struct ListNode* head) {
 
 void circularList(struct ListNode* head) {
     if (head == NULL || head->next == NULL) {
-        return;  // Nothing to do for an empty or single-node list
+        return;  
     }
 
     struct ListNode* current = head;
@@ -121,6 +115,8 @@ void circularList(struct ListNode* head) {
 
     printf("List made circular successfully.\n");
 }
+
+
 
 
 
@@ -185,7 +181,6 @@ struct ListNode* reverseList(struct ListNode* head) {
         curr = nxt;
     }
 
-    // 'pre' now points to the new head of the reversed list
     return pre;
 
 
@@ -199,6 +194,56 @@ struct ListNode* reverseListrecursive(struct ListNode* head){
     head->next->next = head;
     head->next = NULL;
     return rest;
+}
+
+
+
+void checkLoop (struct ListNode* head){
+    if (head==NULL){
+        printf("list vide\n");
+    }
+    struct ListNode *slow = head;
+    struct ListNode *fast = head;
+    
+    while (slow && fast && fast->next){
+        slow = slow->next;
+        fast = fast->next->next;
+        
+        if (slow == fast){
+            printf("loop found !!\n");
+            return;
+        }
+    }
+    printf("loop not found\n");
+}
+
+void makeLoop(struct ListNode* head,int n){
+    if(head==NULL){
+        printf("list vide\n");
+    }
+    struct ListNode *temp = head;
+    struct ListNode *temp2 ;
+    int i = 0;
+    bool loop = false;
+    while (temp->next != NULL){
+        temp = temp->next;
+        
+        if (i==n){
+            temp2 = temp;
+            loop = true;
+        }
+        i++;
+    }
+    
+    if(loop){
+        temp->next = temp2;
+        printf("loop created at Node %d\n" ,n);
+
+    }
+    else{
+        printf("loop not created\n");
+    }
+    return;
 }
 
 #endif
