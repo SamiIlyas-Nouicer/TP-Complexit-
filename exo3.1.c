@@ -4,24 +4,20 @@
 
 int main() {
 
-Noeud* arbre = NULL;
-    arbre = ajouterElement(arbre, 28);
-    arbre = ajouterElement(arbre, 19);
-    arbre = ajouterElement(arbre, 33);
-    arbre = ajouterElement(arbre, 10);
-    arbre = ajouterElement(arbre, 21);
-    arbre = ajouterElement(arbre, 31);
-    arbre = ajouterElement(arbre, 48);
-    arbre = ajouterElement(arbre, 2);
-    arbre = ajouterElement(arbre, 17);
-    arbre = ajouterElement(arbre, 20);
-    arbre = ajouterElement(arbre, 25);
+  Noeud *a = creerNoeud(1);
+    ajouterElement(a, 2);
+    ajouterElement(a, 3);
+    ajouterElement(a, 4);
+    ajouterElement(a, 5);
+    ajouterElement(a, 6);
+    ajouterElement(a, 7);
+    ajouterElement(a, 8);
+    ajouterElement(a, 9);
+    ajouterElement(a, 10);
 
-    prefixedisplay(arbre);
-
-    deletenoeud(arbre, 48);
+    prefixedisplay(a);
     printf("\n");
-    prefixedisplay(arbre);
+    int n = goodNodes(a);
+    printf("Nombre de noeuds bon : %d\n", n);
 
-    libererArbre(arbre);
     return 0;}

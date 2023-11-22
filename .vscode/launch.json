@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/sami/Desktop/TP-Complexit-",
-      "program": "/home/sami/Desktop/TP-Complexit-/build/Debug/outDebug",
+      "externalConsole": true,
+      "cwd": "d:/TP-Complexit-",
+      "program": "d:/TP-Complexit-/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -5,8 +5,12 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-
-
+#include <math.h>
+  struct TreeNode {
+      int val;
+      struct TreeNode *left;
+      struct TreeNode *right;
+ };
 typedef struct noeud
 {
     int valeur;
@@ -223,8 +227,8 @@ int precedence(char op) {
 }
 
 // Fonction pour effectuer une opération
-int applyOperation(int operand1, int operand2, char operator) {
-    switch (operator) {
+int applyOperation(int operand1, int operand2, char operat) {
+    switch (operat) {
         case '+':
             return operand1 + operand2;
         case '-':
@@ -320,5 +324,136 @@ struct noeud* deletenoeud(struct noeud* root, int valeur) {
     return root;
 }
 
+void entasser(int T[], int n, int i) {
+    int imax = i;
+    int gauche = 2 * i + 1;
+    int droite = 2 * i + 2;
+    int temp;
+
+    if (gauche < n && T[gauche] > T[imax]) {
+        imax = gauche;
+    }
+
+    if (droite < n && T[droite] > T[imax]) {
+        imax = droite;
+    }
+
+    if (imax != i) {
+        // Échanger T[i] et T[imax]
+        temp = T[i];
+        T[i] = T[imax];
+        T[imax] = temp;
+
+        // Rappel récursif pour l'entassement sur le sous-arbre modifié
+        entasser(T, n, imax);
+    }
+}
+
+void constructionTas(int T[], int n) {
+    // Dernier noeud interne
+    int dernierNoeudInterne = (n / 2) - 1;
+
+    // Effectuer l'entassement sur tous les noeuds internes
+    for (int i = dernierNoeudInterne; i >= 0; i--) {
+        entasser(T, n, i);
+    }
+}
+
+void ajouterElementTas(int T[], int *n, int element) {
+    // Augmenter la taille du tableau
+    (*n)++;
+
+    // Ajouter l'élément à la fin du tableau
+    T[(*n) - 1] = element;
+    entasser(T, *n, 0);
+
+  
+}
+
+
+int goodNodes(struct noeud* root){
+
+    if(root ==NULL) {return 0;}
+    if (root->gauche == NULL && root->droite == NULL){
+        return 1;
+    }
+    int droite = goodNodes(root->droite);
+    int gauche = goodNodes(root->gauche);
+
+    
+    if (fmax(root->valeur,root->gauche->valeur) == root->gauche->valeur ){ return gauche + 1;}
+    if  (fmax(root->valeur,root->droite->valeur) == root->droite->valeur ){ return droite + 1;}
+
+    return (droite + gauche);
+
+}
+
+
+
+struct TreeNode* deleteNodeIter(struct TreeNode* root, int key) {
+    if (root == NULL) {
+        return NULL;
+    }
+
+    if (root->val == key) {
+        // Node to delete is the root
+        if (root->left == NULL) {
+            struct TreeNode* temp = root->right;
+            free(root);
+            return temp;
+        } else if (root->right == NULL) {
+            struct TreeNode* temp = root->left;
+            free(root);
+            return temp;
+        } else {
+            // Node has two children
+            struct TreeNode* successorParent = root;
+            struct TreeNode* successor = root->right;
+
+            // Find the successor (the leftmost node in the right subtree)
+            while (successor->left != NULL) {
+                successorParent = successor;
+                successor = successor->left;
+            }
+
+            // Copy the key of the successor to the root
+            root->val = successor->val;
+
+            // Delete the successor
+            if (successor == successorParent->left) {
+                successorParent->left = successor->right;
+            } else {
+                successorParent->right = successor->right;
+            }
+
+            free(successor);
+
+            return root;
+        }
+    }
+
+    // The node to delete is not the root
+    struct TreeNode* curr = root;
+    struct TreeNode* precurr = root;
+
+    while (curr != NULL && curr->val != key) {
+        if (curr->val > key) {
+            precurr = curr;
+            curr = curr->left;
+        } else if (curr->val < key) {
+            precurr = curr;
+            curr = curr->right;
+        }
+    }
+
+    if (curr == NULL) {
+        return root; // Node not found
+    } else {
+        // Handle deletion for nodes that are not the root (as you've done)
+        // ...
+
+        return root;
+    }
+}
 
 #endif
