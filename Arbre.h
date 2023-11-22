@@ -287,7 +287,38 @@ int evaluateInfix(char* expression) {
     return pop(operandStack);
 }
 
+struct noeud* deletenoeud(struct noeud* root, int valeur) {
+    if (root == NULL) return root;
 
+    if (valeur < root->valeur)
+        root->gauche = deletenoeud(root->gauche, valeur);
+
+    else if (valeur > root->valeur)
+        root->droite = deletenoeud(root->droite, valeur);
+
+    else {
+    
+            if (root->gauche == NULL) {
+                struct noeud* temp = root->droite;
+                free(root);
+                return temp;
+            } else if (root->droite == NULL) {
+                struct noeud* temp = root->gauche;
+                free(root);
+                return temp;
+            }
+
+        struct noeud* temp = root->droite;
+        while (temp->gauche != NULL)
+            temp = temp->gauche;
+
+        root->valeur = temp->valeur;
+
+        root->droite = deletenoeud(root->droite, temp->valeur);
+    }
+
+    return root;
+}
 
 
 #endif

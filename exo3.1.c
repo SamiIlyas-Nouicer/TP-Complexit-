@@ -19,8 +19,9 @@ Noeud* arbre = NULL;
 
     prefixedisplay(arbre);
 
-    printf("la profondeur de l'arbre est %d\n", profondeurArbre(arbre));
-    printf("le nombre de feuilles de l'arbre est %d\n", nbrFeuille(arbre));
+    deletenoeud(arbre, 48);
+    printf("\n");
+    prefixedisplay(arbre);
 
     libererArbre(arbre);
     return 0;}
